@@ -22,5 +22,6 @@ end
 function action_halt()                       
     luci.http.prepare_content("text/plain")
     luci.http.write("Halting system...")
+    luci.sys.exec("/bin/sync")
     luci.sys.exec("/sbin/halt")
 end 
