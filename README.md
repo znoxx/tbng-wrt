@@ -45,3 +45,13 @@ Same can be achieved from CLI by using scripts `/usr/local/bin/tbng_tor.sh`and `
 
 Also you can "halt" your device from TBNG-WRT menu. This is handy feature for small mobile routers with external root on usb flash to avoid filesystem corruption while powering off.
 
+## Adjusting TOR settings
+
+One can change TOR settings by editing `/etc/torrc.tbng-wrt` to avoid changing original torrc. 
+
+Actually for "increased paranoia" 0.0.0.0 address can be changed to actual LAN address (e.g. 192.168.1.1 or whatever is used). TOR socks, dns and transport are not accessible from WAN side anyway, if you did not disabled OpenWRT default firewall intentionally. But again, it is possible and may be more secure to use real address instead of default 0.0.0.0.
+
+TOR restart from UI or CLI (`/etc/init.d/tor restart`) is required after to apply changes.
+
+
+Current settings are optimized for minimal resources consumption, however your mileage may vary. 
