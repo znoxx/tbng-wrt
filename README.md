@@ -24,7 +24,7 @@ cd /tmp/tbng-wrt
 ```
 If you see prompt:
 
-_********** Installation Finished ***********_
+`********** Installation Finished ***********`
 
 Everything is set up. Now edit `/usr/local/bin/tbng_tor.sh` and set interface name to appropriate. Most probably _lan_ name is ok for most users, but on some systems, like VirtualBox interface is called "mng".
 
