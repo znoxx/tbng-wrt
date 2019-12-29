@@ -11,8 +11,8 @@ Tested on OpenWRT 18.06, should be compatible with future releases.
 * Adds "halt" functionality to UI
 ## Installation
 
-* Make sure device functionality is fine (you can use it as AP and access internet via it).
-* Make sure you have enough space on root filesystem to perform installation of TOR and kmod-ipt-nat-extra
+* Make sure device functionality is fine (you can use it as AP or wired router and access internet via it).
+* Make sure you have enough space on root filesystem to perform installation of TOR and kmod-ipt-nat-extra.
 
 Put installation folder (the clone of this project) somwhere, e.g. /tmp. Let's assume path is `/tmp/tbng-wrt`.
 
@@ -37,6 +37,7 @@ After editing run sequentually:
 /usr/local/bin/tbng_direct.sh
 ```
 No errors must show up.
+
 ## Usage
 
 From UI select TBNG-WRT - TOR traffic to bypass all TCP traffic through TOR from all connected devices or TBNG-WRT - Direct traffic for normal operation.
@@ -53,5 +54,55 @@ Actually for "increased paranoia" 0.0.0.0 address can be changed to actual LAN a
 
 TOR restart from UI or CLI (`/etc/init.d/tor restart`) is required after to apply changes.
 
-
 Current settings are optimized for minimal resources consumption, however your mileage may vary. 
+
+## Using TOR bridges (untested)
+
+OpenWRT (as per version 18.06) does not support obfs4 bridges, however one can e.g. obfs3 tunnels.
+
+Actually, I have _not_ succeded with running TOR via bridges, but it should work. Installation is manual.
+
+### Steps
+
+#### Install package _obfsproxy_
+
+```
+opkg update
+opkg install obfsproxy
+```
+
+#### Adjust settings in original _/etc/tor/torrc_ -- include obfs-related config:
+
+###this is what you have after successfull tbng-wrt setup
+%include /etc/torrc.tbng-wrt
+###this is what you have to add
+%include /etc/torrc.obfs
+
+#### Edit your /etc/torrc.obfs
+
+```
+#####Uncomment and fill below
+
+#UseBridges 1
+#ClientTransportPlugin obfs2,obfs3,scramblesuit exec /usr/bin/obfsproxy managed
+
+###Place your bridges here:
+
+#bridge obfs3 -----------
+#bridge scramblesuit ----------
+````
+
+#### Get some bridges
+
+Probably, you know how to do it. Or consult http://bridges.torproject.org
+
+Edit again _/etc/torrc.obfs_ and uncomment everything starting from single `#`character. Modify strings with `-----`with actual bridge settings.
+
+#### Start using it
+
+Restart TOR. It should pick your config and your bridges and startup. __Warning__ -- it looks, that bridge using requires more CPU/RAM, that usual TOR activity and not-so-powerful routers can choke on this. Follow your syslog to check the current activity.
+
+
+
+
+
