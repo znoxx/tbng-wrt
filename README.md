@@ -90,7 +90,7 @@ opkg install obfsproxy
 
 #bridge obfs3 -----------
 #bridge scramblesuit ----------
-````
+```
 
 #### Get some bridges
 
