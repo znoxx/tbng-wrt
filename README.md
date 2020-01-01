@@ -73,10 +73,12 @@ opkg install obfsproxy
 
 #### Adjust settings in original _/etc/tor/torrc_ -- include obfs-related config:
 
+```
 ###this is what you have after successfull tbng-wrt setup
 %include /etc/torrc.tbng-wrt
 ###this is what you have to add
 %include /etc/torrc.obfs
+```
 
 #### Edit your /etc/torrc.obfs
 
